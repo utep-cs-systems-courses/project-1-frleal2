@@ -1,42 +1,27 @@
 Lab Project 1: Building a Tokenizer
 ===================================
-A related demo program is in directory "sortArgDemo".  All encouraged
-to thorougly understand it before attempting this project.
+Tentative Due Date: Friday October 5th, 2018 11:59 PM MST
 
 All work should be your own work. Please see the [Course Website](https://sites.google.com/site/arch1utep/home#TOC-Academic-Honesty) for full details on the course's policy on academic honesty.
 
-Prototype source code for this project is in a  directory named `src`.
-You should add and modify source code within that directory, and those
-changes should be pushed to your private Github repository prior to
-the deadline.:  
+The following should be pushed to your private Github repository prior to the deadline.:
 - All .c and .h source files
-- A Makefile whose default production builds the project, and whose
-`clean` production eliminates any files created when the project is
-built.
-- A brief README documenting any non-obvious aspects of your program.  For example, you may want to describe how it works, how to run it, and any bugs or idiosyncracies the user ought to know about.
+- A Makefile to build and clean your project
+- A brief README explaining how to use your program
 
-You will be evaluated based on the following criteria reflecting
-aspects of programmer maturity valued by industry.
+_Your repository should be clean and not cluttered with any temporary scratch files (e.g. hello.c~ or #hello.c#)._
 
-- Proper use of development tools (e.g. bash, emacs, make, compiler,
-  and git) 
-- Clear and concise written communication 
-- Code Hygene: consistent, expressive, and efficient
-    - variable, function, and struct names
-    - comments
-    - modularization (into fuctions and files) including header files
-    - storage management (variable scope & lifetime, allocation and
-      freeing of dynamically allocated memory)
-    - consistent and language-appropriate coding style
-       - indentation
-       - use of capitalization and whitespace (e.g. `char *word_end(char *p)` 
-         rather than `char* wordEnd (char* p)`)
-    - algorithms and data structures
-    - repository content (all necessary files are included, no
-      unnecessary files such as `#tokenizer.h#` and `tokenizer.o`)
-    - repository log messages (we encourage you to examine ours)
-- Correctness
-- Timely completion
+You will be evaluated based on the following criteria:
+
+- Tools (efficiently utilize bash, emacs, make, the compiler, and git)
+- Written Communication (appropriate documentation)
+- Mature Programming 
+  - proper code hygiene (i.e expressive variable, function, and struct names)
+  - appropriate algorithms
+  - modularization
+  - header files
+- Variable Allocation (appropriate use of variables, scope, allocation)
+- Completion
 
 You may refer to the [Grading and Course Learning Outcomes webpage](https://sites.google.com/site/arch1utep/course-learning-outcomes) for an in depth explanation of the grading criteria.
 
@@ -46,6 +31,13 @@ maintains a history. Tokenizing is the process of dividing a string into
 tokens by some delimeter (e.g. the string librarys split() function).
 Consider tokenizing the string “The cake is a lie!” using the space
 character. This would result in: \[“The”, “cake”, “is”, “a”, “lie!”\].
+
+When designing your functions, it is important to consider situations
+where a string is not constructed ideally. In other words, what would
+happen if your tokenizer encountered a string which contained multiple
+delimeters between each token? For example, using a space as a delimeter
+and accepting the following string as input, “&nbsp;&nbsp;&nbsp;Oh&nbsp;&nbsp;hi&nbsp;&nbsp;&nbsp;there”, would result
+in \[“Oh”, “hi”, “there”\].
 
 Lastly, your tokenizer should maintain a history. A good example of this
 is the bash command, **history**; or, something similar to below:
@@ -77,42 +69,34 @@ my fancy interface thing
 ```
 
 ## Working with Strings
-Inside this repository there are two header files, **tokenizer.h** and **history.h**, 
-which declare functions your project will define. You should explore the
+At this point, you will be provided with a repository containing two
+header files, **tokenizer.h** and **history.h**. You should explore the
 contents of each file so that you are familiar with the instructions to
 follow.
 
 The second milestone of your project is to define several of the
-functions declared and described (but not defined) in tokenizer.h:
+functions contained in the tokenizer.h file:
 
-1.  `int space_char(char c); // true if c is a tab or space, and not zero`
-2.  `int non_space_char(char c); // true if c not a tab or space, and not zero`
-3.  `char *word_start(char *s); // * to first (non-space) char in first word in s`
-4.  `char *word_terminator(char *word);   // * to char after end of word
-5.  `int count_words(char *s); // the number of words in s`
-
-The declarations of these functions in `tokenizer.h` includes a more
-comprehensive description of each function's semantics.  **We strongly
-encourage you to read these descriptions carefully, and to include
-them with your function declarations.**
-
-You should carefully read the declarations of these functions in `Tokenizer.h` t
- also includes a more comprehensive description of each function's semantics.  
+1.  `int string_length(char*);`
+2.  `char is_valid_character(char c);`
+3.  `int find_word_start(char*, int);`
+4.  `int find_word_end(char*, int);`
+5.  `int count_words(char*);`
 
 Each function definition should appropriately use the arguments and
-return the correct type declared in the method declaration. **Your code should include `tokenizer.h` and not modify the the declarations it contains.** 
-
-Lastly, you are **not allowed to use any libraries except stdio.h and stdlib.h**
-in your source code.
+return the correct type declared in the method signature. **You should
+not modify these method signatures.** Inside the header file you will
+find helpful comments explaining the purpose of each function. Lastly,
+you are not allowed to use any libraries except for stdio.h and stdlib.h
+in your source code (this includes string.h).
 
 ## Dealing with Memory Allocation
 The third milestone of your project will require you to allocate and
-free memory.  You must define and test the 
-following functions declared in `tokenizer.h`.
+free memory. Going back to the **tokenizer.h** file, you are now going
+to define the following functions:
 
-1.  `char *copy_str(char *inStr, short len);`
-2.  `void print_tokens(char**);`
-3.  `void free_tokens(char**);`
+1.  `void print_tokens(char**);`
+2.  `void free_tokens(char**);`
 
 To test your functions, you should hardcode the allocation of an array
 of strings (char\*\*).
@@ -121,7 +105,7 @@ of strings (char\*\*).
 Now that you have all the pieces for the tokenizer defined, the last
 part is to put them together and define the tokenizer:
 
-`char **tokenize(char *s);`
+1.  `char** tokenize(char*);`
 
 As explained in the Overview, the tokenize method should accept a string
 of characters as input and return an array of tokens. It is important to
@@ -137,15 +121,11 @@ each node containing:
 2.  the string entered by user,
 3.  and, a pointer to the next node.
 
-Inside the **history.h** header file you will find two struct
-declarations representing this notion.
+Inside the **history.h** header file you will find two struct declarations representing this notion. 
 
 Overall, a user should be able to: 
 
 1. view the history of strings entered by the user 
-2. and recall a certain history item by using the command 
-   `!3` (i.e. an exclamation directly followed by the sequence number).
+2. and recall a certain history item by using the command `!3` (i.e. an exclamation directly followed by the sequence number).
 
-You should define each function from the **history.h** header file in
-a separate history.c file and then incorporate the history with your
-tokenizer and interface.
+You should define each function inside the **history.h** header file and then incorporate the history with your tokenizer and interface.
