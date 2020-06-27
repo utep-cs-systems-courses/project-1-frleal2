@@ -80,6 +80,53 @@ int count_words(char* sentence){
     }
 }
 
+/* Function that prints all tokens*/
+void print_tokens(char** tokens){
+    while(*tokens){
+        printf("[%s]", *tokens);
+        tokens++;
+    }
+}
+
+/*Function that frees all tokens and the array containing the tokens. */
+void free_tokens(char** tokens){
+    while(*tokens){
+        free(*tokens);
+        tokens++;
+    }
+    free(tokens);
+}
+
+/*Function that tokenizes the string that is passed on to the argument into an array of tokens*/
+char** tokenize(char* sentence){
+    int num_words = count_words(sentence);
+    int index = 0;
+
+    char** tokens = (char**) malloc((num_words + 1) * sizeof(char*)); //allocate memory for pointers
+    
+    for (size_t i = 0; i < num_words; i++)
+    {
+        int index = find_word_start(sentence, index);
+        int end_word = find_word_end(sentence, index);
+        int word_length = (end_word - index);
+        word_length++;
+
+        tokens[i] = (char*) malloc((word_length + 1) * sizeof(char)); //allocate memory for each word plus extra char for NULL
+        
+        for (size_t j = 0; j < word_length; j++)
+        {
+            tokens[i][j] = sentence[index + j];
+        }
+        index = (find_word_end(sentence, index) + 1);
+    }
+
+    tokens[num_words] = (char*) malloc(sizeof(char));
+    tokens[num_words] = '\0';
+    return tokens;
+}
+
+
+
 
 
 
