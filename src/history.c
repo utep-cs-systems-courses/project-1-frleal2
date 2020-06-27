@@ -1,4 +1,4 @@
-#include "histor.h"
+#include "history.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -6,18 +6,18 @@
 
 char* copy_str(char* string){
     short counter = 1;
-    for (i = 0; string[i] != '\0'; i++)
+    for (size_t i = 0; string[i] != '\0'; i++)
     {
         counter++;
     }
     char* twin = (char*)malloc(counter*sizeof(char));
-    i =0;
+    short i =0;
     while(*string){
         twin[i] = *string;
         i++;
         string++;
     }
-    return copy;
+    return twin;
 }
 
 /* We need a linked list in order to keep track of the history, fuction to initialize a list*/
