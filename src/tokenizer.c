@@ -42,6 +42,7 @@ int find_word_start(char* sentence, int index){
         }
         else{
             index++;
+            sentence++;
         }
         return index;
     }
@@ -55,8 +56,27 @@ int find_word_end(char* sentence, int index){
         }
         else{
             index++;
+            sentence++;
         }
         return index;
+    }
+}
+
+/*Function to find the number of words there is in a line or sentence*/
+int count_words(char* sentence){
+    int words = 0;
+    int start_of_word = 0;
+    int end_of_word = 0;
+    int sentence_length = string_length(sentence);
+
+    while(*sentence){
+        if(start_of_word >= sentence_length){
+            break;
+        }
+        start_of_word = find_word_start(sentence, start_of_word);
+        end_of_word = find_word_end(sentence, start_of_word);
+        words++;
+        sentence++;
     }
 }
 
