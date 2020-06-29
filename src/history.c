@@ -4,7 +4,7 @@
 
 /* We need to have a method to copy strings, function to copy string*/
 
-char* copy_str(char* string){
+char* str_duplicate(char* string){
     short i = 0;
   while(string[i] != '\0'){
     i++;
