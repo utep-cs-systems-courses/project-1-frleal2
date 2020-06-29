@@ -30,67 +30,62 @@ List* init_history(){
 
 /* Then we need to be able to add an element to the end of the list, function to add element to a list*/
 void add_history(List* list, char* string){
-    if(list->root == NULL){
-        list->root == (Item*) malloc(sizeof(Item));
-        list->root->id = 1;
-        list->root->str = copy_str(string);
-        list->root->next = NULL;
+  if(list->root == NULL){//initialize first value
+    list->root = (Item*) malloc(sizeof(Item));
+    list->root->id = 1;
+    list->root->str = str_duplicate(string);
+    list->root->next = NULL;
+  }
+  else{
+    Item* temp;
+    temp= (list->root);
+    while((temp->next) != NULL){
+      temp = temp->next;
     }
-    else{
-        Item* tail;
-        tail = (list->root);
-        while((tail->next)!= NULL){
-            tail = tail->next;
-        }
-        tail->next = (Item*) malloc(sizeof(Item));
-        (*tail).next -> id = ((*tail).id) + 1;
-        (*tail).next -> str = copy_str(string);
-        (*tail).next -> next = NULL;
-    }
+    temp->next = (Item*)malloc(sizeof(Item));
+    (*temp).next->id = ((*temp).id) + 1;
+    (*temp).next->str = str_duplicate(string);
+    (*temp).next->next = NULL;
+
+  }
 }
 
 /* Function to retrieve string stored in node according to id*/
-char* get_history(List* list, int id){
-    Item* head;
-    if(list -> root == NULL){
-        return "Error, List is empty";
+char* get_history(List* list, int ident){
+  Item* temp;
+  if(list->root == NULL)
+    return "List is empty";
+  temp = (list->root);
+  while(temp!=NULL){
+    if((*temp).id == ident){
+      return (*temp).str;
     }
-    else{
-        head = (list->root);
-        while(head != NULL){
-            if((*head).id == id){
-                return (*head).str;
-            }
-            head = head->next;
-        }
-        return "ERROR, ID not in list";
-    }
+    temp = temp->next;
+  }
+  return "ERROR ID NOT FOUND"; //return an empty string basically
+
 }
 
 /* Function in order to print the entire */
 void print_history(List* list){
-    Item* head;
-    if(list -> root == NULL){
-        printf("ERROR, List is empty");
-    }
-    else{
-        head = (list->root);
-        while(head != NULL){
-            printf("Element %d: $s \n", head->id, head->str);
-            head = head -> next;
-        }
-    }
+  Item* temp;
+  temp = (list->root);
+  while(temp!=NULL){
+    printf("Element %d: %s \n", temp->id, temp->str);
+    temp = temp->next;
+  }
+
 }
 
 /*Function to free the memory allocated in the list along with its elements*/
 void free_history(List* list){
-    Item* head;
-    Item* temp;
-    head = (list ->root);
-    while(head != NULL){
-        temp = head;
-        head = head->next;
-        free(temp);
-    }
-    free(list);
+  Item* temp;
+  Item* node;
+  node = list->root;
+  while(node!=NULL){
+    temp = node;
+    node = node->next;
+    free(temp);
+  }
+  free(list);
 }
