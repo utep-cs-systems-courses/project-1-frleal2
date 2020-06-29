@@ -8,7 +8,7 @@ void tokenizing_mode();
 
 
 int main(){
-  printf("Welcome to Felipe's tokenizer");
+  printf("Welcome to Felipe's tokenizer\n");
   printf("/e: will exit the program.\n");
   printf("/t: will enter tokenize mode.\n");
   printf("/h: will print HELP\n");
