@@ -6,17 +6,17 @@
 
 char* copy_str(char* string){
     short i = 0;
-    while(string[i] != '\0'){
-        i++;
-    }
+  while(string[i] != '\0'){
     i++;
-    char* copy = (char*) malloc(i*sizeof(char));
-    i =0;
-    while(*string){
-        copy[i] = *string;
-        i++;
-        string++;
-    }
+  }
+  i++;
+  char* copy = (char*) malloc(i*sizeof(char));
+  i =0;
+  while(*string){
+    copy[i] = *string;
+    i++;
+    string++;
+  }
   return copy;
 }
 
