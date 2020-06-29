@@ -46,30 +46,27 @@ void read_command(){
 }
 
 void read_tokens(){
-  char command[100];
+  char com[100];
   List* history = init_history();
   char ** tokens;
   while(1){
-    printf("Enter string to tokenize or /e to exit the program or /l# for history access:");
-    scanf(" %99[^\n]s",command);
-    if(command[0]== '/'){
-      if(command[1] == 'e'){
-          printf("Exiting Program");
-          break;
+    printf("Enter string to tokenize or -q to quit or -!# for history access:");
+    scanf(" %99[^\n]s",com);
+    if(com[0]== '-'){
+      if(com[1] == 'q')
+	break;
+      else if(com[1] == '!'){
+	printf("Searchng for ID %d \n",com[2]-'0'); //we substract character zero to get the numerical equivalent of the char
+	tokens = tokenize(get_history(history,com[2]-'0'));
+	print_tokens(tokens);
       }
-      else if(command[1] == 'l'){
-          printf("Searchng for ID %d \n",command[2]-'0'); // minus 0 to get real count
-          tokens = tokenize(get_history(history,command[2]-'0'));
-          print_tokens(tokens);
-      }
-      else{
-          printf("ERROR, command not recognized, please try again or type /h for help.");
-      }
+      else
+	printf("Command not recognized.");
     }
     else{
-      tokens = tokenize(command);
+      tokens = tokenize(com);
       print_tokens(tokens);
-      add_history(history,command);
+      add_history(history,com);
       free_tokens(tokens);
     }
     printf("\n");
