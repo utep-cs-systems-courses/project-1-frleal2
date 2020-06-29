@@ -43,7 +43,6 @@ int find_word_start(char* line, int index){
   }else{//we are in a valid character, so we are the word beginning
     return index;
   }
-  printf(index)
   return index;
 
 }
