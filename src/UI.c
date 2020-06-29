@@ -59,10 +59,9 @@ void read_tokens(){
       }
       else if(command[1] == 'l'){
           printf("Searchng for ID %d \n",command[2]-'0'); // minus 0 to get real count
-          tokens = tokenize(get_history(history,com[2]-'0'));
+          tokens = tokenize(get_history(history,command[2]-'0'));
           print_tokens(tokens);
       }
-      else if(command)
       else{
           printf("ERROR, command not recognized, please try again or type /h for help.");
       }
