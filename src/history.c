@@ -5,19 +5,19 @@
 /* We need to have a method to copy strings, function to copy string*/
 
 char* copy_str(char* string){
-    short counter = 1;
-    for (size_t i = 0; string[i] != '\0'; i++)
-    {
-        counter++;
+    short i = 0;
+    while(string[i] != '\0'){
+        i++;
     }
-    char* twin = (char*)malloc(counter*sizeof(char));
-    short i =0;
+    i++;
+    char* copy = (char*) malloc(i*sizeof(char));
+    i =0;
     while(*string){
-        twin[i] = *string;
+        copy[i] = *string;
         i++;
         string++;
     }
-    return twin;
+  return copy;
 }
 
 /* We need a linked list in order to keep track of the history, fuction to initialize a list*/
