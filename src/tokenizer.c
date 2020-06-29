@@ -15,23 +15,23 @@ int string_length(char* str){
 
 /*Evaluates weather a character is valid or invalid*/
 char is_valid_character(char c){
-    switch(c){     //switch method allows you to try different cases
-        case '\v':
-        case '\\':
-        case '\'':
-        case '\"':
-        case ' ':
-        case '\0':
-        case '\n':
-        case '\t':
-        case '\b':
-        case '\a':
-        case '\f':
-        case '\r': 
-            return 0;
-        default:
-            return 1;
-    }
+  switch(c){
+    case '\n':
+    case '\t':
+    case '\b':
+    case '\a':
+    case '\f':
+    case '\r':
+    case '\v':
+    case '\\':
+    case '\'':
+    case '\"':
+    case ' ':
+    case '\0':
+      return 0;
+    default:
+      return 1;
+  }
 }
 
 /*Function to find the start of a word*/
@@ -43,7 +43,9 @@ int find_word_start(char* line, int index){
   }else{//we are in a valid character, so we are the word beginning
     return index;
   }
+  printf(index)
   return index;
+
 }
 
 /*Function to find the end of a word*/
@@ -77,19 +79,20 @@ int count_words(char* line){
 
 /* Function that prints all tokens*/
 void print_tokens(char** tokens){
-    while(*tokens){
-        printf("[%s]", *tokens);
-        tokens++;
-    }
+  while(*tokens){
+    printf("{%s}   ", *tokens);
+    tokens++;
+  }
 }
 
 /*Function that frees all tokens and the array containing the tokens. */
 void free_tokens(char** tokens){
-    while(*tokens){
-        free(*tokens);
-        tokens++;
-    }
-    free(tokens);
+  char** temp = tokens;
+  while(*tokens){
+    free(*tokens);
+    tokens++;
+  }
+  free(temp);
 }
 
 /*Function that tokenizes the string that is passed on to the argument into an array of tokens*/
