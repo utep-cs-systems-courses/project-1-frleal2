@@ -8,6 +8,11 @@ void tokenizing_mode();
 
 
 int main(){
+  printf("Welcome to Felipe's tokenizer");
+  printf("\n");
+  printf("/e: will exit the program.");
+  printf("\n");
+  printf("/t: will enter tokenize mode.\n");
   read_comms();
 }
 
@@ -16,15 +21,16 @@ void read_comms(){
   char com[100];
   
   while(1){
-    printf(">>>");
+    printf("#");
     scanf("%s", com);
-    if(com[0]=='-'){
-      if(com[1] == 'q')
+    if(com[0]=='/'){
+      if(com[1] == 'e')
 	break;
       else if(com[1] == 't')
 	tokenizing_mode();
       else
 	printf("Command not recognized");
+  printf("\n");
     }
     else{
       printf("%s \n", com);
@@ -39,18 +45,19 @@ void tokenizing_mode(){
   List* history = init_history();
   char ** tokens;
   while(1){
-    printf("Enter string to tokenize or -q to quit or -!# for history access:");
+    printf("Enter string to tokenize or /e to quit or /l# for history access:");
     scanf(" %99[^\n]s",com);
-    if(com[0]== '-'){
-      if(com[1] == 'q')
+    if(com[0]== '/'){
+      if(com[1] == 'e')
 	break;
-      else if(com[1] == '!'){
+      else if(com[1] == 'l'){
 	printf("Searchng for ID %d \n",com[2]-'0'); //we substract character zero to get the numerical equivalent of the char
 	tokens = tokenize(get_history(history,com[2]-'0'));
 	print_tokens(tokens);
       }
       else
 	printf("Command not recognized.");
+  printf("\n");
     }
     else{
       tokens = tokenize(com);
