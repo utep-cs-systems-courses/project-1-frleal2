@@ -4,13 +4,13 @@
 
 /*Function to count the number of characters in a string*/
 
-int string_length(char* string){
-    int counter = 0;
-    while(*string){
-        counter++;
-        string++;
-    }
-    return counter; 
+int string_length(char* str){
+  int counter = 0;
+  while(*str++){
+    ++counter;
+  }
+  
+  return counter;
 }
 
 /*Evaluates weather a character is valid or invalid*/
@@ -35,50 +35,45 @@ char is_valid_character(char c){
 }
 
 /*Function to find the start of a word*/
-int find_word_start(char* sentence, int index){
-    while(*sentence){
-        if(is_valid_character(sentence[index]) == 1){
-            return index;
-        }
-        else{
-            index++;
-            sentence++;
-        }
-        return index;
+int find_word_start(char* line, int index){
+  if(!is_valid_character(line[index])){ //first we check if we are in a valid character, if not we look for one
+    while(!is_valid_character(line[index])){
+      index++;
     }
+  }else{//we are in a valid character, so we are the word beginning
+    return index;
+  }
+  return index;
 }
 
 /*Function to find the end of a word*/
-int find_word_end(char* sentence, int index){
-    while(*sentence){
-        if(is_valid_character(sentence[index]) == 0){
-            return index;
-        }
-        else{
-            index++;
-            sentence++;
-        }
-        return index;
-    }
+int find_word_end(char* line, int index){
+  int beg_of_word = find_word_start(line, index);
+  //Now having the beginning we can get to the end
+  while(is_valid_character(line[beg_of_word])){
+    beg_of_word++;//when the loop is done this will be the end of the word
+  }
+  //here we went one over the end so we just return
+  beg_of_word--;
+  return beg_of_word;
+
 }
 
 /*Function to find the number of words there is in a line or sentence*/
-int count_words(char* sentence){
-    int words = 0;
-    int start_of_word = 0;
-    int end_of_word = 0;
-    int sentence_length = string_length(sentence);
-
-    while(*sentence){
-        if(start_of_word >= sentence_length){
-            break;
-        }
-        start_of_word = find_word_start(sentence, start_of_word);
-        end_of_word = find_word_end(sentence, start_of_word);
-        words++;
-        sentence++;
+int count_words(char* line){
+    int counter = 0;//counts words
+    int index = 0;
+    short end = 0;
+    short length = string_length(line);
+    while(1){
+      index = find_word_start(line, index);
+      if(index>=length) break;
+      counter ++;
+      end = find_word_end(line, index);
+      index = end+1;
     }
-}
+    return counter;
+  }
 
 /* Function that prints all tokens*/
 void print_tokens(char** tokens){
@@ -98,31 +93,24 @@ void free_tokens(char** tokens){
 }
 
 /*Function that tokenizes the string that is passed on to the argument into an array of tokens*/
-char** tokenize(char* sentence){
-    int num_words = count_words(sentence);
-    int index = 0;
-
-    char** tokens = (char**) malloc((num_words + 1) * sizeof(char*)); //allocate memory for pointers
-    
-    for (size_t i = 0; i < num_words; i++)
-    {
-        int index = find_word_start(sentence, index);
-        int end_word = find_word_end(sentence, index);
-        int word_length = (end_word - index);
-        word_length++;
-
-        tokens[i] = (char*) malloc((word_length + 1) * sizeof(char)); //allocate memory for each word plus extra char for NULL
-        
-        for (size_t j = 0; j < word_length; j++)
-        {
-            tokens[i][j] = sentence[index + j];
-        }
-        index = (find_word_end(sentence, index) + 1);
+char** tokenize(char* line){
+  short num_words = count_words(line);
+  short word_leng =0;
+  int index = 0;
+  char** tokens = (char**) malloc((num_words+1)*sizeof(char*));//we allocate memory for the number of pointers needed
+  
+  for(short i=0;i<num_words;i++){ //we will calculate length of each string and allocate memory for each
+    word_leng = (find_word_end(line, index) - find_word_start(line, index)) + 1;
+    tokens[i] =(char *) malloc((word_leng + 1)*sizeof(char));//we allocate one extra for the NULL character
+    index = find_word_start(line, index);
+    for(short j = 0;j<word_leng;j++){
+      tokens[i][j] = line[index+j];
     }
-
-    tokens[num_words] = (char*) malloc(sizeof(char));
-    tokens[num_words] = '\0';
-    return tokens;
+    index = (find_word_end(line, index) +1);
+  }
+  tokens[num_words] = (char*) malloc(sizeof(char));
+  tokens[num_words] = '\0';
+  return tokens;
 }
 
 
