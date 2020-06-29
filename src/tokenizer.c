@@ -79,7 +79,7 @@ int count_words(char* sentence){
 /* Function that prints all tokens*/
 void print_tokens(char** tokens){
   while(*tokens){
-    printf("{%s}   ", *tokens);
+    printf("[%s]   ", *tokens);
     tokens++;
   }
 }
