@@ -3,12 +3,12 @@
 #include "tokenizer.h"
 #include "history.h"
 
-void read_command();
-void read_tokens();
+void read_comms();
+void tokenizing_mode();
 
 
 int main(){
-  read_command();
+  read_comms();
 }
 
 void read_comms(){
@@ -34,7 +34,7 @@ void read_comms(){
 
 }
 
-void read_tokens(){
+void tokenizing_mode(){
   char com[100];
   List* history = init_history();
   char ** tokens;
